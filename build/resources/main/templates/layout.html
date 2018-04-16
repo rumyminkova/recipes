@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(page_title)" lang="en">
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width"/>
+
+    <title th:text="${page_title}"> Brioche French Toast with Nutella | My Recipes</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'/>
+    <link rel="stylesheet" th:href="@{/assets/css/unsemantic-grid-responsive.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/styles.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/mystyles.css}"/>
+
+</head>
+<body>
+<nav th:fragment="nav">
+     <block sec:authorize="isAuthenticated()">
+         <a th:href="@{/recipes/favorites}">
+            <span sec:authentication="name"> </span>
+        </a>
+     </block>
+
+    <block sec:authorize="isAnonymous()">
+       <a th:href="@{/signup}">sign-up</a>
+    </block>
+
+
+    <block sec:authorize="isAuthenticated()">
+      &bull;
+      <a th:href="@{/logout}">logout </a>
+
+    </block>
+</nav>
+
+
+<div th:fragment="top-image" class="grid-100">
+    <a th:href="@{/recipes}">
+        <h1>
+            <img th:src="@{/assets/images/chefbot.svg}" height="60px"/>
+            <br/>
+            My Recipes
+        </h1>
+    </a>
+</div>
+
+
+<div th:fragment="flash" th:if="${flash != null}" class="container">
+    <div class="message">
+         <div th:classappend="${#strings.toLowerCase(flash.status)}" th:text="${flash.message}" class="flash"></div>
+    </div>
+</div>
+
+
+<!--<div th:fragment="scripts">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="/js/site.js"></script>
+</div>-->
+
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head th:replace="layout :: head('My Recipes')"></head>
+
+<body>
+
+<nav th:replace="layout :: nav"></nav>
+
+  <div class="grid-container">
+
+    <div th:replace="layout::top-image"> </div>
+
+
+    <div class="grid-100">
+
+     <div class="recipes">
+        <div th:replace="layout :: flash"></div>
+
+
+
+
+        <div class="grid-100 row controls">
+                <div class="grid-40">
+                    <input placeholder="Search" id="searchWord"> </input>
+                </div>
+
+                <div class="grid-20">
+                    <select id="searchBy">
+                        <option value="">Search By...</option>
+                        <option value="/recipes/search/description/">Description</option>
+                        <option value="/recipes/search/ingredient/">Ingredient</option>
+                    </select>
+                </div>
+
+                <div class="grid-20">
+                        <button onclick="onSearch()">Search</button>
+
+                </div>
+
+            <div class="clear"></div>
+
+
+           <div class="grid-30">
+                <select id="catSelect" onchange="onSelectCategory()">
+                    <option th:value="@{/recipes}">All Categories</option>
+                    <option th:each="cat:${categories}" th:value="'/recipes/category/'+${cat.id}" th:text="${cat.name}" th:selected="(${cat.id}==${selCat})"></option>
+                </select>
+            </div>
+
+            <div class="grid-70">
+                <div class="flush-right">
+                    <form th:action="@{/recipes/add}">
+                        <button>+ Add Recipe</button>
+                    </form>
+                </div>
+            </div>
+
+
+        </div> <div class="clear"></div>
+
+        <div class="grid-100 row addHover" th:each="recipeM:${recipesMap}">
+          <a th:href="@{'/recipes/'+${recipeM.key.id}+'/details'}">
+            <div class="grid-70">
+              <p>
+                <span><img th:src="${recipeM.value}?'/assets/images/favorited.svg':'/assets/images/favorite.svg'" height="12px"/>
+                <span th:text="${recipeM.key.name}"></span></span>
+              </p>
+            </div>
+          </a>
+          <div class="hoverBlock">
+            <div class="grid-30">
+              <div class="flush-right">
+               <form th:name="'form'+${recipeM.key.id}" th:action="@{|/recipes/${recipeM.key.id}/delete|}" method="post">
+                <p>
+                 <a th:href="@{'/recipes/'+${recipeM.key.id}+'/edit'}"> <img th:src="@{/assets/images/edit.svg}" height="12px"/> Edit </a>
+                 <a href="javascript:;" onclick="((this.parentElement).parentElement).submit();"> <img th:src="@{/assets/images/delete.svg}" height="12px"/> Delete </a>
+
+                </p>
+               </form>
+              </div>
+            </div>
+          </div>
+        </div> <div class="clear"></div>
+
+        <div class="row">&nbsp;</div>
+
+      </div> <!-- recipes -->
+    </div> <!-- grid-100 -->
+  </div> <!-- grid-container -->
+
+  <script>
+      function onSelectCategory(){
+         var x=document.getElementById("catSelect").value
+         top.location.href = x;
+      }
+
+
+      function onSearch(){
+        var x=document.getElementById("searchBy").value;
+        var y=document.getElementById("searchWord").value;
+
+        if (x=="") {
+            document.getElementById("searchWord").placeholder="Please enter search terms";
+            return false;
+        }
+        if (y ==""){
+            return false;
+        }
+        top.location.href = x+y;
+        return true;
+      }
+  </script>
+
+</body>
+</html>

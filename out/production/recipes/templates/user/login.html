@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+
+<head th:replace="layout :: head('Login | My Recipes')"></head>
+
+
+<body>
+
+<nav th:replace="layout :: nav"></nav>
+
+  <div class="grid-container">
+
+    <div th:replace="layout::top-image"> </div>
+
+    <div class="grid-100">
+      <div class="recipes">
+        <form th:action="@{/login}" method="post" th:object="${user}">
+
+          <div class="prefix-20 grid-60 suffix-20">
+            <p>
+              <input th:field="*{username}" placeholder="Username"> </input>
+            </p>
+          </div> <div class="clear"></div>
+          <div class="prefix-20 grid-60 suffix-20">
+            <p>
+              <input th:field="*{password}" placeholder="Password" type="password"> </input>
+            </p>
+          </div> <div class="clear"></div>
+          <div class="prefix-20 grid-60 suffix-20">
+            <p>
+              <button type="submit">Login</button>
+            <div th:replace="layout :: flash"></div>
+            </p>
+          </div> <div class="clear"></div>
+
+       </form>
+
+
+
+      </div> <!-- recipes -->
+    </div> <!-- grid-100 -->
+  </div> <!-- grid-container -->
+</body>
+</html>

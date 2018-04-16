@@ -1,0 +1,37 @@
+.flash {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding: 1rem 2rem;
+    border-radius: 4px;
+    font-size: 1.1rem;
+}
+
+.flash.success {
+    color: blue;
+}
+
+.flash.failure {
+    color:red;
+}
+
+.flash.info {
+    color: black;
+}
+
+/* Form validation messages */
+
+.error .error-message {
+    color: red;
+    padding: 2px;
+}
+
+
+.recipe_image {
+    border:1px solid black;
+    border-radius: 2px;
+
+    height: 170px;
+    width:auto;
+    margin-top: 2rem;
+}
+

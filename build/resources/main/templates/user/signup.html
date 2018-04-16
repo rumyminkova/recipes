@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head th:replace="layout :: head('Sign up')"></head>
+
+<body>
+
+<nav th:replace="layout :: nav"></nav>
+
+
+  <div class="grid-container">
+
+    <div th:replace="layout::top-image"> </div>
+
+    <div class="grid-100">
+      <div class="recipes">
+        <form th:action="@{/signup}" method="post" th:object="${userDTO}">
+
+        <div class="prefix-20 grid-60 suffix-20" th:classappend="${#fields.hasErrors('username')} ? 'error'">
+          <p>
+            <input th:field="*{username}" placeholder="Username" th:errorclass="error" > </input>
+          </p>
+            <div class="error-message" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+        </div> <div class="clear"></div>
+
+        <div class="prefix-20 grid-60 suffix-20" th:classappend="${#fields.hasErrors('password')} ? 'error'">
+          <p>
+            <input th:field="*{password}" placeholder="Password" type="password" th:errorclass="error" > </input>
+          </p>
+            <div class="error-message" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+        </div> <div class="clear"></div>
+
+
+        <div class="prefix-20 grid-60 suffix-20"  th:classappend="${#fields.hasErrors('matchingPassword')} ? 'error'">
+          <p>
+            <input th:field="*{matchingPassword}" placeholder="Password Again" type="password" th:errorclass="error" > </input>
+         </p>
+          <div class="error-message" th:if="${#fields.hasErrors('matchingPassword')}" th:errors="*{matchingPassword}"></div>
+        </div> <div class="clear"></div>
+
+        <div class="prefix-20 grid-60 suffix-20">
+          <p>
+            <button type="submit">Sign-up</button>
+            <div th:replace="layout :: flash"></div>
+          </p>
+        </div> <div class="clear"></div>
+        </form>
+      </div> <!-- recipes -->
+    </div> <!-- grid-100 -->
+  </div> <!-- grid-container -->
+</body>
+</html>

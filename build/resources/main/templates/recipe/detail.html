@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head th:replace="layout :: head('My Recipes')"></head>
+
+<body>
+
+<nav th:replace="layout :: nav"></nav>
+
+<div class="grid-container">
+
+  <div th:replace="layout::top-image"> </div>
+
+  <div class="grid-100">
+
+    <div class="recipes">
+      <div th:replace="layout :: flash"></div>
+
+        <div class="grid-100 row controls">
+         <form id="FavForm" th:action="@{|/recipes/${recipe.id}/favorite|}" method="post">
+          <div class="grid-50">
+            <h2 th:text="${recipe.name}"> Brioche French Toast with Nutella </h2>
+          </div>
+          <div class="grid-50">
+            <h2 class="flush-right">
+              <a href="javascript:;" onclick="document.getElementById('FavForm').submit();">
+               <img th:src="${favorite}?'/assets/images/favorited.svg':'/assets/images/favorite.svg'" height="16px"/>
+              </a>
+            </h2>
+          </div>
+         </form>
+        </div> <div class="clear"></div>
+
+        <div class="grid-100 row">
+           <div class="grid-20">
+              <p>
+                  <label> Photo </label>
+
+              </p>
+
+           </div>
+
+            <div class="grid-60">
+               <div th:unless="${recipe.recipeImage}==null">
+                 <img th:src="@{|/recipes/images/${recipe.recipeImage.id}.jpg|}" alt="image" height="170px" width="auto"/>
+
+
+                 <form th:action="@{|/recipes/${recipe.id}/images/delete|}" method="post">
+                   <p>
+                     <a th:href="@{|/recipes/${recipe.id}/images/${recipe.recipeImage.id}/edit|}">Edit</a>
+                     <button type="submit">Remove</button>
+                   </p>
+                 </form>
+               </div>
+            </div>
+             <p>
+              <a th:if="${recipe.recipeImage}==null" th:href="@{|/recipes/${recipe.id}/images/upload|}" style="color:blue;">Upload Image</a>
+            </p>
+         </div>
+
+        <div class="clear"></div>
+
+        <div class="clear"></div>
+
+        <div class="grid-100 row">
+          <div class="grid-20">
+            <p>
+              <label> Name </label>
+            </p>
+          </div>
+          <div class="grid-40">
+            <p th:text="${recipe.name}">
+              Brioche French Toast with Nutella
+            </p>
+          </div>
+        </div> <div class="clear"></div>
+
+        <div class="grid-100 row">
+          <div class="grid-20">
+            <p>
+              <label> Description </label>
+            </p>
+          </div>
+          <div class="grid-40">
+            <p th:text="${recipe.description}">
+              Yummmy dessert toast covered in egg wash and topped with nutella and seasonal fruit.
+            </p>
+          </div>
+        </div> <div class="clear"></div>
+
+        <div class="grid-100 row">
+          <div class="grid-20">
+            <p>
+              <label> Category </label>
+            </p>
+          </div>
+          <div class="grid-30">
+            <p th:text="${recipe.category.name}">
+              Dessert
+            </p>
+          </div>
+        </div> <div class="clear"></div>
+
+        <div class="grid-100 row">
+          <div class="grid-20">
+            <p>
+              <label> Prep Time </label>
+            </p>
+          </div>
+          <div class="grid-20">
+            <p th:text="${recipe.prepTime}">
+              5 minutes
+            </p>
+          </div>
+        </div> <div class="clear"></div>
+
+        <div class="grid-100 row">
+          <div class="grid-20">
+            <p>
+              <label> Cook Time </label>
+            </p>
+          </div>
+          <div class="grid-20">
+            <p th:text="${recipe.cookTime}">
+              15 minutes
+            </p>
+          </div>
+
+        </div> <div class="clear"></div>
+
+        <div class="grid-100 row">
+          <div class="grid-20">
+            <p>
+              <label> Ingredients </label>
+            </p>
+          </div>
+          <div class="grid-30">
+            <p>
+              <label> Item </label>
+            </p>
+            </div>
+            <div class="grid-30">
+              <p>
+                <label> Condition </label>
+                </p>
+              </div>
+              <div class="grid-20">
+                <p>
+                  <label> Quantity </label>
+                  </p>
+                </div>
+
+                <div class="ingredient-row" th:each="ing:${recipe.ingredients}">
+                  <div class="prefix-20 grid-30">
+                    <p th:text="${ing.item}">
+                      Eggs
+                    </p>
+                  </div>
+                  <div class="grid-30">
+                    <p th:text="${ing.condition}">
+                      Fresh
+                    </p>
+                  </div>
+                  <div class="grid-10 suffix-10">
+                    <p th:text="${ing.quantity}">
+                      2
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+            <div class="clear"></div>
+
+              <div class="grid-100 row" >
+                <div class="grid-20">
+                  <p>
+                    <label> Steps </label>
+                  </p>
+                </div>
+                <div class="grid-80">
+                  <p>
+                    <label> Description </label>
+                    </p>
+                  </div>
+
+                  <div class="step-row" th:each="step,iterStat:${recipe.prepSteps}">
+                    <div class="prefix-20 grid-80">
+                      <p th:text="${iterStat.count}+'. ' +${step.description}">
+                        1. Crack your eggs and beat them.
+                      </p>
+                    </div>
+                  </div>
+
+              </div>
+              <div class="clear"></div>
+
+              <div class="grid-100 row">   <!--Recipe Owner-->
+                 <div class="grid-20">
+                    <p>
+                      <label th:text="Owner"> Owner </label>
+                    </p>
+                </div>
+              <div class="grid-40">
+
+                <a th:href="@{'/recipes/favorites/'+${recipe.owner.id}}">
+                    <p>
+                       <span th:text="${recipe.owner.username}"></span>
+                    </p>
+                </a>
+               </div>
+              </div> <div class="clear"></div>
+
+              <div class="row">&nbsp;</div>
+
+              </div> <!-- recipes -->
+            </div> <!-- grid-100 -->
+          </div> <!-- grid-container -->
+        </body>
+ </html>
